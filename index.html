@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.charts {
+  height: 100px;
+  position: absolute;
+  width: 300px;
+}
+
+#stop {
+  position: absolute;
+  bottom: 0;
+}
+
+#highlight {
+  position: absolute;
+}
+
+#arrow_angle {
+  position: absolute;
+  height: auto;
+  width: 30px;
+}
+
+.car {
+  height: auto;
+  position: absolute;
+  width: 100px;
+}
+
+#road {
+  background-color: limeGreen;
+  position: absolute;
+  height: 10px;
+  width: 100%;
+}
+
+#road-indicator {
+  position: absolute;
+}
+
+textarea {
+  bottom: 0;
+  height: 200px;
+  position: absolute;
+  width: 100%;
+}
+  </style>
+    <title></title>
+  </head>
+
+  <body>
+  <div class="charts set"></div>
+  <div class="charts err"></div>
+  <textarea>
+var P = 0.5;
+var I = 0.00000000001;
+var D = 400;
+
+var lastErr = 0;
+var lastTime = 0;
+var errSum = 0;
+
+return function(err, angle) {
+  data.terms.err = err;
+  var now = Date.now();
+
+  var timeChange = lastTime ? now - lastTime : 1;
+  data.terms.timeChange = timeChange;
+
+  errSum += (err * timeChange);
+  data.terms.errSum = errSum;
+
+  var dErr = (err - lastErr) / timeChange;
+  data.terms.dErr = ""+dErr;
+  
+  lastErr = err;
+  lastTime = now;
+
+  data.terms.pTerm = P * err;
+  data.terms.iTerm = I * errSum;
+  data.terms.dTerm = D * dErr;
+
+  data.terms.output = data.terms.pTerm + data.terms.iTerm + data.terms.dTerm;
+  return data.terms.pTerm + data.terms.iTerm + data.terms.dTerm;
+}
+  </textarea>
+  <script src="app.js"></script>
+  </body>
+</html>
