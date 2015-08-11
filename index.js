@@ -7,12 +7,17 @@ var Sparklines = require("sparklines");
 var dat = require("dat-gui");
 var RCar = require("./car");
 
+function clamp(v, min, max) {
+  return v < min ? min : v > max ? max : v;
+}
+
 var data = {
   car: {
     a: 0,
     x: 0,
     y: 25,
     steeringAngle: 0,
+    maxSteeringAngle: 30,
     speed: 1
   },
   road: {
@@ -191,7 +196,7 @@ function animate() {
 
   if(syntaxOK) {
     try {
-      data.car.steeringAngle = fnPID((data.road.y - data.car.y), data.car.steeringAngle);
+      data.car.steeringAngle = clamp(fnPID((data.road.y - data.car.y), data.car.steeringAngle), -data.car.maxSteeringAngle, data.car.maxSteeringAngle);
     } catch(e) {
     }
   }
