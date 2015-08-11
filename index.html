@@ -7,6 +7,12 @@
   padding: 0;
 }
 
+svg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 .charts {
   height: 100px;
   position: absolute;
@@ -23,15 +29,9 @@
 }
 
 #arrow_angle {
-  position: absolute;
-  height: auto;
-  width: 30px;
 }
 
 .car {
-  height: auto;
-  position: absolute;
-  width: 100px;
 }
 
 #road {
@@ -56,6 +56,7 @@ textarea {
   </head>
 
   <body>
+  <svg></svg>
   <div class="charts set"></div>
   <div class="charts err"></div>
   <textarea>

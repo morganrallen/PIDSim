@@ -59,20 +59,20 @@ datGui.add(data.terms, "output").listen();
 
 var elRoad = new RActive({
   append: true,
-  el: document.body,
-  template: '<div id="road" style="top: {{ road.y }}px"></div>',
+  el: document.querySelector("svg"),
+  template: '<rect id="road" y="{{ road.y }}"></rect>',
   data: data
 });
 
 var elCar = new RCar({
   append: true,
-  el: document.body,
+  el: document.querySelector("svg"),
   data: data.car
 });
 
 var elRoadDistance = new RActive({
   append: true,
-  el: document.body,
+  el: document.querySelector("svg"),
   template: '<div id="road-indicator" style="left: {{ car.x }}px; top: {{ car.y + ((road.y - car.y ) / 2) }}px;">{{ Math.round(road.y - car.y) }}</div>',
   data: data
 });
@@ -81,7 +81,7 @@ var stop = false;
 
 var elStop = new RActive({
   append: true,
-  el: document.body,
+  el: document.querySelector("svg"),
   template: '<div on-click="startstop">{{ action }}</div><div on-click="set">Reset</div>',
   data: data.stop
 });
@@ -104,7 +104,7 @@ elStop.on("startstop", function() {
 
 var elHighlighter = new RActive({
   append: true,
-  el: document.body,
+  el: document.querySelector("svg"),
   template: '<svg id="highlight" style="left: {{ car.x - 40 }}px; top: {{ car.y - 40}}px;">\
     {{#circles}}<circle cx="{{ x }}" cy="{{ y }}" r="1" />{{/}}\
   </svg>',
@@ -129,8 +129,8 @@ elHighlighter.update("circles");
 
 var elIndicatorAngle = new RActive({
   append: true,
-  el: document.body,
-  template: '<img id="arrow_angle" src="arrow.svg" style="transform: rotate({{ (car.a + car.steeringAngle) - 90 }}deg) translate(0px, 30px); left: {{ car.x + 80 }}px; top: {{ car.y - 11 }}px;" />',
+  el: document.querySelector("svg"),
+  template: '<image id="arrow_angle" xlink:href="arrow.svg" transform="rotate({{ (car.a + car.steeringAngle) - 90 }} {{ car.x }} {{ car.y + 40 }})" x="{{ car.x }}" y="{{ car.y + 40 }}" height="100" width="30" />',
   data: data
 });
 
@@ -188,7 +188,7 @@ function animate() {
     }
   }
 
-  sparkErrData.push(data.road.y - data.car.y);
+  sparkErrData.push(data.car.y - 40);
   sparkSetData.push(data.road.y);
 
   sparkErr.draw(sparkErrData);
@@ -202,6 +202,7 @@ function animate() {
   }
 
   elCar.update();
+  elRoad.update();
   elRoadDistance.update();
   elIndicatorAngle.update("car");
   elHighlighter.update("car");
