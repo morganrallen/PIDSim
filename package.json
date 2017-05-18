@@ -13,5 +13,8 @@
     "ecstatic": "^0.8.0",
     "ractive": "^0.7.3",
     "sparklines": "^1.0.0"
+  },
+  "devDependencies": {
+    "watchify": "^3.9.0"
   }
 }
