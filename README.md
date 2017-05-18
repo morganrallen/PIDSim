@@ -4,6 +4,8 @@ PID Controller visualization
 Right now this is very much a brain dump. Its mostly working but features to
 turn this into a proper learning tool can be added.
 
+![UI](/demo.png?raw=true)
+
 Wishlist
 --------
 * Better car model/animation
